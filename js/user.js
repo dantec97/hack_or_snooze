@@ -6,6 +6,13 @@ let currentUser;
 /******************************************************************************
  * User login/signup/login
  */
+//check for previous user in DOM
+window.onload = async function() {
+  // Wait for checkForRememberedUser to complete before updating UI
+  await checkForRememberedUser();
+};
+
+
 
 /** Handle login form submission. If login ok, sets up the user instance */
 
@@ -78,9 +85,10 @@ async function checkForRememberedUser() {
   const username = localStorage.getItem("username");
   if (!token || !username) return false;
 
-  // try to log in with these credentials (will be null if login failed)
+  // Attempt login with stored credentials
   currentUser = await User.loginViaStoredCredentials(token, username);
 }
+
 
 /** Sync current user information to localStorage.
  *
@@ -114,3 +122,30 @@ function updateUIOnUserLogin() {
 
   updateNavOnLogin();
 }
+
+//handle favorites
+
+function toggleFavoriteStory(evt) {
+  if (!currentUser) {
+    alert('You must be logged in to favorite stories.');
+    return;
+  }
+
+  const storyId = $(evt.target).closest('li').attr('id');
+  const isFavorited = currentUser.favorites.includes(storyId);
+
+  if (isFavorited) {
+    currentUser.unfavoriteStory(storyId)
+      .then(() => {
+        $(evt.target).removeClass('favorited').addClass('not-favorited');
+      });
+  } else {
+    currentUser.favoriteStory(storyId)
+      .then(() => {
+        $(evt.target).removeClass('not-favorited').addClass('favorited');
+      });
+  }
+ 
+}
+
+$(document).on('click', '.favorite-btn', toggleFavoriteStory);

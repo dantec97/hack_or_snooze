@@ -2,6 +2,7 @@
 
 const BASE_URL = "https://hack-or-snooze-v3.herokuapp.com";
 
+
 /******************************************************************************
  * Story: a single story in the system
  */
@@ -73,23 +74,48 @@ class StoryList {
    * Returns the new Story instance
    */
 
-  async addStory( /* user, newStory */) {
-    // UNIMPLEMENTED: complete this function!
+  async addStory(user, newStory) {
+    // Extract the user's token from the user object
+    const token = user.loginToken;
+  
+    try {
+      // Make a POST request to the API to add a new story
+      const response = await axios.post('https://hack-or-snooze-v3.herokuapp.com/stories', {
+        token, 
+        story: newStory  // Pass the new story data (title, author, url)
+      });
+  
+      // Create a new instance of the Story class from the response data
+      const createdStory = new Story(response.data.story);
+  
+      // Add the new story to the beginning of the stories list (optional, if needed)
+      this.stories.unshift(createdStory);
+  
+      // Return the new story instance
+      return createdStory;
+  
+    } catch (err) {
+      console.error('Error adding story:', err);
+      throw err;  // Optionally re-throw the error to handle it further up the call stack
+    }
+    
   }
+  
 }
 
 
 /******************************************************************************
  * User: a user in the system (only used to represent the current user)
  */
-
 class User {
   /** Make user instance from obj of user data and a token:
    *   - {username, name, createdAt, favorites[], ownStories[]}
    *   - token
    */
+  
 
   constructor({
+    
                 username,
                 name,
                 createdAt,
@@ -97,6 +123,7 @@ class User {
                 ownStories = []
               },
               token) {
+
     this.username = username;
     this.name = name;
     this.createdAt = createdAt;
@@ -136,6 +163,7 @@ class User {
       response.data.token
     );
   }
+  
 
   /** Login in user with API, make User instance & return it.
 
@@ -193,4 +221,63 @@ class User {
       return null;
     }
   }
+  
+  async favoriteStory(storyId) {
+    try {
+      console.log("faved")
+      if (!this.loginToken) {
+        throw new Error("Token is missing");
+      }
+  
+      const response = await axios.post(
+        `https://hack-or-snooze-v3.herokuapp.com/users/${this.username}/favorites/${storyId}`,
+        {
+          token: this.loginToken,  // Send token in the body
+        },
+        {}
+      );
+      
+      this.favorites.push(storyId); // Add to local favorites
+      return response.data;
+    } catch (err) {
+      console.error('Error favoriting story:', err);
+      throw err;
+    }
+  }
+  
+  
+  
+  
+  
+
+  async unfavoriteStory(storyId) {
+    try {
+      if (!this.loginToken) {
+        throw new Error("Token is missing");
+      }
+  
+      // Send request to API to unfavorite a story with token in the body
+      const response = await axios.delete(
+        `https://hack-or-snooze-v3.herokuapp.com/users/${this.username}/favorites/${storyId}`,
+        {
+          data: { token: this.loginToken }  // Use `data` to send the token in the body
+        }
+      );
+  
+      // Remove the story from the local favorites list
+      const index = this.favorites.indexOf(storyId);
+      console.log("unfavorited");
+  
+      if (index > -1) {
+        this.favorites.splice(index, 1);  // Remove from local favorites
+      }
+  
+      return response.data;
+    } catch (err) {
+      console.error('Error unfavoriting story:', err);
+      throw err;
+    }
+  }
+  
 }
+

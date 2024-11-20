@@ -32,8 +32,34 @@
 
 .story-author {
   margin-left: 2em;
+  color: green;
 }
 
 .story-user {
   display: block;
+  color: gold;
+}
+
+.not-favorited{
+  color: rgb(198, 198, 198);
+  width: 22px;
+  height: 20px;
+  overflow: hidden;
+  border: none;
+  background-color: #f6f6ef;;
+ 
+  
+}
+
+.favorited{
+  width: 22px;
+  height: 20px;
+  overflow: hidden;
+  border: none;
+ background-color: #f6f6ef;;
+}
+
+.fav-stories{
+  color: red;
+  /* display: none; */
 }

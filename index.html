@@ -39,19 +39,42 @@
   </div>
   <div class="nav-right">
     <a class="nav-link" href="#" id="nav-login">login/signup</a>
+    |
     <a class="nav-link" href="#" id="nav-user-profile"></a>
+    |
+    <a class="nav-link" href="#" id="nav-favorites">favorites</a>
+    |
     <a class="hidden" id="nav-logout" href="#"><small>(logout)</small></a>
-  </div>
+    |
+   <a href="" id="submit-link">submit</a>
+  
 </nav>
 
 <!-- area for stories (all stories, user stories, favorites) -->
 <section class="stories-container container">
+ <!-- New Story Form (Hidden by default) -->
+<form id="new-story-form" style="display: none;">
+  <label for="title">Title:</label>
+  <input type="text" id="title" name="title" required>
+
+  <label for="author">Author:</label>
+  <input type="text" id="author" name="author" required>
+
+  <label for="url">URL:</label>
+  <input type="url" id="url" name="url" required>
+
+  <button type="submit">Submit</button>
+</form>
+
 
   <!-- loading message (removed by JS after stories loaded) -->
   <div id="stories-loading-msg">Loading&hellip;</div>
 
   <!-- List of all stories -->
   <ol id="all-stories-list" class="stories-list"></ol>
+
+    <!-- List of stories favorited by the user -->
+    <ol id="fav-stories-list" class="fav-stories"></ol>
 
 </section>
 

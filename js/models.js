@@ -271,7 +271,10 @@ class User {
       // Remove the story from the local favorites list
       const index = this.favorites.indexOf(storyId);
       console.log("unfavorited");
-  
+            // showFavoritesList();
+            // putStoriesOnPage();
+            // console.log("is u sure")
+
       if (index > -1) {
         this.favorites.splice(index, 1);  // Remove from local favorites
       }

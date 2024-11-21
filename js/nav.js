@@ -46,7 +46,11 @@ function updateNavOnLogin() {
   $navUserProfile.text(`${currentUser.username}`).show();
 }
  // Handle the click event for the "Favorites" button in the nav bar
-document.querySelector('#nav-favorites').addEventListener('click', showFavoritesList,);
+ document.querySelector('#nav-favorites').addEventListener('click', () => {
+  showFavoritesList();
+  $favStoriesList.show(); // show the list on click
+});
+
 
 function showFavoritesList() {
   console.debug("showFavoritesList");

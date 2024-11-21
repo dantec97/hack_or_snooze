@@ -123,23 +123,31 @@ function saveFavoritesToLocalStorage(favorites) {
 }
 
 
+
 document.addEventListener('click', async function (event) {
   if (event.target.classList.contains('favorite-btn')) {
     const storyId = event.target.dataset.storyId;
-
+    
     if (event.target.classList.contains('favorited')) {
+      console.log("IFFFF HEYYY THIS WORKING");
       // If already favorited, unfavorite it
       event.target.classList.remove('favorited');
+      
+      // Await the unfavorite action
       await currentUser.unfavoriteStory(storyId);
-
+      
       // Update the local favorites array by filtering out the unfavorited story
       currentUser.favorites = currentUser.favorites.filter(
         story => story.storyId !== storyId
+        
       );
+
+      // Ensure UI reflects changes before rendering favorites
+      showFavoritesList();
     } else {
       // Otherwise, favorite it
       event.target.classList.add('favorited');
-      console.log("HEYYY THIS WORKING");
+      console.log("elseeee HEYYY THIS WORKING");
 
       const storyToAdd = storyList.stories.find(story => story.storyId === storyId);
       if (storyToAdd) {
@@ -151,15 +159,22 @@ document.addEventListener('click', async function (event) {
         }
       }
     }
-
     // Update the UI
     renderFavorites();
-
+    
     // Ensure favorites data is passed to localStorage in the correct format
     saveFavoritesToLocalStorage(currentUser.favorites);
   }
 });
 
+
+document.addEventListener('click',function (event) {
+  if (event.target.classList.contains('favorite-btn favorited')) {
+    
+    //update the favorites list (fixed favs not disapearing from list until reload)
+    showFavoritesList();
+  }
+});
 
 
 function renderFavorites() {
@@ -220,3 +235,19 @@ function addStoryToFavoritesPage(storyId) {
 
 
 document.addEventListener('DOMContentLoaded', updateFavoritesOnPageLoad);
+// Function to navigate to the favorites list
+// Function to navigate to the favorites list
+function goToFavorites() {
+  document.body.classList.add('favorites-page');  // Mark as on the favorites page
+  document.querySelector('#favorites-container').style.display = 'block';  // Show the favorites list
+  document.querySelector('#all-stories-list').style.display = 'none';  // Hide the main stories list
+  showFavoritesList();
+}
+
+// Function to navigate back to the home page
+function goToHome() {
+  document.body.classList.remove('favorites-page');  // Remove the favorites-page class
+  document.querySelector('#favorites-container').style.display = 'none';  // Hide the favorites list
+  document.querySelector('#all-stories-list').style.display = 'block';  // Show the main stories list
+  renderHomePage(); // Assuming this resets the page layout for the home view
+}

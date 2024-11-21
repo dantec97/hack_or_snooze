@@ -25,11 +25,15 @@ class Story {
   /** Parses hostname out of URL and returns it. */
 
   getHostName() {
-    // UNIMPLEMENTED: complete this function!
-    return "hostname.com";
-  }
+    try {
+      const urlObject = new URL(this.url);
+      return urlObject.hostname;
+    } catch (err) {
+      console.error("Invalid URL in story:", this.url);
+      return "unknown";
+    }
 }
-
+}
 
 /******************************************************************************
  * List of Story instances: used by UI to show story lists in DOM.

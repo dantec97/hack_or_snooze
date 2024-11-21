@@ -52,12 +52,20 @@ function showFavoritesList() {
   console.debug("showFavoritesList");
   $allStoriesList.empty(); // Clear existing stories
   $storiesLoadingMsg.hide(); // Hide loading message if visible
+  $favStoriesList.empty(); // clear 
 
   if (currentUser && currentUser.favorites.length > 0) {
-    for (let story of currentUser.favorites) {
+    // Deduplicate the favorites array based on storyId (or another unique property)
+    const uniqueFavorites = currentUser.favorites.filter((value, index, self) =>
+      index === self.findIndex((story) => (
+        story.storyId === value.storyId  // Assuming 'storyId' is the unique identifier
+      ))
+    );
+
+    // Now, loop through the unique stories and render them
+    for (let story of uniqueFavorites) {
       const $story = generateStoryMarkup(story); // Reuse your existing function to generate markup
       $favStoriesList.append($story);
-      
     }
   } else {
     $favStoriesList.append('<h5>No favorites added yet!</h5>');
@@ -65,3 +73,4 @@ function showFavoritesList() {
 
   $allStoriesList.show(); // Display the list
 }
+

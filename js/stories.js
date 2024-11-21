@@ -18,6 +18,29 @@ async function getAndShowStoriesOnStart() {
   }
 }
 
+function handleFavoriteStory(evt) {
+  const storyId = evt.target.dataset.storyId;
+
+  // Check if the story is already in the favorites list
+  const isFavorite = currentUser.favorites.some(story => story.id === storyId);
+
+  if (isFavorite) {
+    // If it's already favorited, do nothing (or you can unfavorite it here if needed)
+    console.log('This story is already favorited');
+  } else {
+    // If it's not favorited, add it to the favorites list
+    const storyToFavorite = getStoryById(storyId); // Replace with your logic to get the story by ID
+    currentUser.favorites.push(storyToFavorite);
+
+    // Save the updated favorites to localStorage
+    saveFavoritesToLocalStorage(currentUser.favorites);
+
+    // Update the UI to show the favorited state
+    evt.target.classList.add('favorited');
+  }
+}
+
+
 
 /**
  * A render method to render HTML for an individual Story instance
@@ -49,8 +72,12 @@ async function handleStorySubmission(evt) {
 
 
 function generateStoryMarkup(story) {
+  if (!(story instanceof Story)) {
+    console.error("Invalid story instance:", story);
+    return;
+  }
   const hostName = story.getHostName();
-  const isFavorited = currentUser && currentUser.favorites && currentUser.favorites.includes(story.storyId);
+  const isFavorited = currentUser && currentUser.favorites.some(fav => fav.storyId === story.storyId);
   const favoriteClass = isFavorited ? 'favorited' : 'not-favorited';
 
   return $(`
@@ -65,6 +92,7 @@ function generateStoryMarkup(story) {
     </li>
   `);
 }
+
 
 
 
@@ -87,40 +115,71 @@ function putStoriesOnPage() {
 
   $allStoriesList.show();
 }
+
 function saveFavoritesToLocalStorage(favorites) {
-  localStorage.setItem('favorites', JSON.stringify(favorites));
+  const uniqueFavorites = Array.from(new Set(favorites.map(fav => fav.storyId)))
+    .map(id => favorites.find(fav => fav.storyId === id));
+  localStorage.setItem('favorites', JSON.stringify(uniqueFavorites));
 }
+
 
 document.addEventListener('click', async function (event) {
   if (event.target.classList.contains('favorite-btn')) {
-    const storyId = event.target.dataset.storyId; // Get the storyId from data attribute
+    const storyId = event.target.dataset.storyId;
 
     if (event.target.classList.contains('favorited')) {
-      // If it's already favorited, unfavorite it
+      // If already favorited, unfavorite it
       event.target.classList.remove('favorited');
+      await currentUser.unfavoriteStory(storyId);
 
-      // Remove the story from the favorites
+      // Update the local favorites array by filtering out the unfavorited story
       currentUser.favorites = currentUser.favorites.filter(
         story => story.storyId !== storyId
       );
-
     } else {
       // Otherwise, favorite it
       event.target.classList.add('favorited');
+      console.log("HEYYY THIS WORKING");
 
-      // Fetch the story object to add it properly
       const storyToAdd = storyList.stories.find(story => story.storyId === storyId);
       if (storyToAdd) {
-        currentUser.favorites.push(storyToAdd);
+        await currentUser.favoriteStory(storyId);
+
+        // Add to local favorites if not already present
+        if (!currentUser.favorites.some(fav => fav.storyId === storyId)) {
+          currentUser.favorites.push(storyToAdd);
+        }
       }
     }
 
-    // Update localStorage and the UI
+    // Update the UI
+    renderFavorites();
+
+    // Ensure favorites data is passed to localStorage in the correct format
     saveFavoritesToLocalStorage(currentUser.favorites);
-    showFavoritesList(); // Re-render the favorites list to update the DOM
   }
 });
-//the abouve code is doubling the favs 
+
+
+
+function renderFavorites() {
+  console.log("Favorites:", currentUser.favorites); // Log the current favorites
+  const $favStoriesList = $('#favorites-container');
+  $favStoriesList.html(''); // Clear the container before rendering
+
+  currentUser.favorites.forEach(favorite => {
+    const $storyElement = $(`
+      <li id="${favorite.storyId}">
+        <a href="${favorite.url}" target="_blank">${favorite.title}</a>
+        <small>by ${favorite.author}</small>
+        <button class="favorite-btn favorited" data-story-id="${favorite.storyId}">⭐</button>
+      </li>
+    `);
+    $favStoriesList.append($storyElement);
+  });
+}
+
+//the abouve code is doubling the favs
 
 function findStoryById(storyId) {
   return allStories.find(story => story.storyId === storyId);  // Assuming `allStories` is an array of all stories
@@ -154,8 +213,7 @@ function removeStoryFromFavoritesPage(storyId) {
 function addStoryToFavoritesPage(storyId) {
   const story = storyList.stories.find(story => story.storyId === storyId);
   const $story = generateStoryMarkup(story);
-  const favoritesList = document.querySelector("#fav-stories-list");
-  favoritesList.append($story);  // Adds the story back to the favorites list
+  $favStoriesList.append($story);  // Adds the story back to the favorites list
   
 }
 

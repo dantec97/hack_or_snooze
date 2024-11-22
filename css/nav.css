@@ -6,6 +6,7 @@ nav {
   align-items: center;
   padding: 5px 20px;
   border-radius: 3px 3px 0 0;
+  padding: 1rem;
 }
 
 .navbar-brand {
@@ -13,11 +14,18 @@ nav {
 }
 
 .nav-link {
-  font-size: 0.85rem;
+  font-size: .85rem;
   margin: 0 3px;
 }
 
 .nav-right {
   margin-left: auto;
   text-align: right;
+  /* font-size: 100px; */
+}
+
+#nav-all{
+  font-size: 1rem;
+  font-weight:bolder;
+  
 }

@@ -32,9 +32,11 @@ async function login(evt) {
 
   saveUserCredentialsInLocalStorage();
   updateUIOnUserLogin();
+  location.reload();
 }
 
 $loginForm.on("submit", login);
+
 
 /** Handle signup form submission. */
 
@@ -56,7 +58,29 @@ async function signup(evt) {
   $signupForm.trigger("reset");
 }
 
-$signupForm.on("submit", signup);
+$signupForm.on("submit", function() {
+  
+  signup(); // Call your signup function
+ 
+  putStoriesOnPage();
+});
+
+
+async function loadStories() {
+  // Show the loading message when fetching stories
+  $("#stories-loading-msg").show();
+  
+  // Fetch the stories
+  const stories = await fetchStories();
+  
+  // Hide the loading message once stories are loaded
+  $("#stories-loading-msg").hide();
+  
+  // Handle displaying stories on the page
+  displayStories(stories);
+}
+
+
 
 /** Handle click of logout button
  *
@@ -67,6 +91,11 @@ function logout(evt) {
   console.debug("logout", evt);
   localStorage.clear();
   location.reload();
+  
+  // Ensure that the loading message is hidden
+  $("#stories-loading-msg").hide(); 
+
+  $loginForm.show();
 }
 
 $navLogOut.on("click", logout);
@@ -85,9 +114,13 @@ async function checkForRememberedUser() {
   const username = localStorage.getItem("username");
   if (!token || !username) return false;
 
+  // Hide the loading message once the user is checked
+  $("#stories-loading-msg").hide();
+
   // Attempt login with stored credentials
   currentUser = await User.loginViaStoredCredentials(token, username);
 }
+
 
 
 /** Sync current user information to localStorage.
@@ -118,11 +151,18 @@ function saveUserCredentialsInLocalStorage() {
 function updateUIOnUserLogin() {
   console.debug("updateUIOnUserLogin");
 
+  // Show the story list once the user is logged in
   $allStoriesList.show();
-  
+
+  // Hide the login and signup forms
+  $loginForm.hide();
+  $signupForm.hide();
 
   updateNavOnLogin();
+  
+  
 }
+
 
 //handle favorites
 

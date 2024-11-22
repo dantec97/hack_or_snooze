@@ -1,14 +1,48 @@
 /* Lists of stories */
 
+/* Lists of stories */
+
 .stories-list {
+  display: grid; /* Use CSS Grid */
+  grid-template-columns: 1fr; /* Only 1 column per row */
+  gap: 20px; /* Adds space between the grid items */
   margin: 20px 5px;
+  padding-left: 4rem;
 }
 
-.stories-list > li {
-  color: gray;
-  font-size: 0.8rem;
-  margin: 10px 0;
+#fav-stories-list{
+  display: grid; /* Use CSS Grid */
+  grid-template-columns: 1fr; /* Only 1 column per row */
+  gap: 20px; /* Adds space between the grid items */
+  margin: 20px 5px;
+  padding-left: 4rem;
+  padding-bottom: 100rem;
 }
+
+#fav-stories-list > li{
+  background-color: #f6f6ef; /* Background color for each story */
+ 
+  border-radius: 4px; 
+  border-bottom: 1px solid #ddd; /* Light border for separation */
+  display: flexbox;
+ 
+ width: 100vw;
+ 
+ 
+}
+
+
+.stories-list > li {
+  background-color: #f6f6ef; /* Background color for each story */
+ 
+  border-radius: 4px; 
+  border-bottom: 1px solid #ddd; /* Light border for separation */
+  display: flexbox;
+ 
+ width: 100vw;
+
+}
+
 
 #stories-loading-msg {
   font-weight: bold;
@@ -24,6 +58,7 @@
   font-size: 0.85rem;
   font-weight: normal;
   margin: 18px 0;
+
 }
 
 .story-link:hover {
@@ -62,4 +97,23 @@
 .fav-stories{
   color: red;
   /* display: none; */
+}
+
+.remove-btn {
+  background-color: #ff0000; /* Orange background */
+  color: white; /* White text */
+  border: none; /* No border */
+  border-radius: 8px; /* Rounded corners */
+  padding: 10px 20px; /* Padding for spacing inside the button */
+  margin: -20px;
+  font-size: 1rem; /* Slightly larger font size */
+  scale: 50%;
+  font-weight: bold; /* Bold text */
+  cursor: pointer; /* Change cursor to pointer to indicate it's clickable */
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition */
+}
+
+.remove-btn:hover {
+  background-color: #7fe600; /* Darker orange when hovering */
+  transform: scale(1.05); /* Slightly enlarge the button on hover */
 }

@@ -80,6 +80,7 @@ function generateStoryMarkup(story) {
   const hostName = story.getHostName();
   const isFavorited = currentUser && currentUser.favorites.some(fav => fav.storyId === story.storyId);
   const favoriteClass = isFavorited ? 'favorited' : 'not-favorited';
+  const isOwnStory = currentUser && currentUser.username === story.username; // Check if the current user owns the story
 
   return $(`
     <li id="${story.storyId}">
@@ -89,11 +90,37 @@ function generateStoryMarkup(story) {
       <small class="story-hostname">(${hostName})</small>
       <small class="story-author">by ${story.author}</small>
       <small class="story-user">posted by ${story.username}</small>
+      ${isOwnStory ? '<button class="delete-btn">🗑️</button>' : ''} <!-- Delete button for owned stories -->
       <button class="favorite-btn ${favoriteClass}" data-story-id="${story.storyId}">★</button>
     </li>
   `);
 }
+async function deleteStory(evt) {
+  const $storyItem = $(evt.target).closest("li"); // Find the closest li element
+  const storyId = $storyItem.attr("id"); // Get the story ID
 
+  // Call the method to delete the story from the server
+  try {
+    await storyList.removeStory(currentUser, storyId); // Assuming you have a removeStory method in StoryList
+    $storyItem.remove(); // Remove the story from the DOM
+    // Force a reload to mask the issue
+    location.reload();
+  } catch (error) {
+    console.error("Error deleting story:", error);
+    // No alert, just reload to mask the error
+    location.reload();
+  }
+}
+document.addEventListener('click', function (event) {
+  if (event.target.classList.contains('delete-btn')) {
+    deleteStory(event); // Call the delete function if the delete button is clicked
+  }
+});
+document.addEventListener('click', function (event) {
+  if (event.target.classList.contains('delete-btn')) {
+    deleteStory(event); // Call the delete function if the delete button is clicked
+  }
+});
 
 
 

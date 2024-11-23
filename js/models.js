@@ -2,6 +2,7 @@
 
 const BASE_URL = "https://hack-or-snooze-v3.herokuapp.com";
 
+// Correct initialization of storyList as an instance of StoryList
 
 /******************************************************************************
  * Story: a single story in the system
@@ -42,7 +43,9 @@ class Story {
 class StoryList {
   constructor(stories) {
     this.stories = stories;
+    
   }
+  
 
   /** Generate a new StoryList. It:
    *
@@ -105,7 +108,30 @@ class StoryList {
     
   }
   
+  async removeStory(user, storyId) {
+    const token = user.loginToken;
+    console.log("Deleting story with ID:", storyId); // Log the story ID
+    
+      const response = await axios.delete(`https://hack-or-snooze-v3.herokuapp.com/stories/${storyId}`, {
+        data: { token }
+      });
+  
+      if (response.data.success) {
+        const storyIndex = this.stories.findIndex(story => story.storyId === storyId);
+        if (storyIndex > -1) {
+          this.stories.splice(storyIndex, 1);
+        }
+      } else {
+        throw new Error("Failed to delete story");
+      }
+    
+  }
+  
+  
+
 }
+  
+
 
 
 /******************************************************************************

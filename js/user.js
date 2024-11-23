@@ -99,10 +99,9 @@ function logout(evt) {
   $loginForm.show();
   $storiesLoadingMsg.hide();
   console.log("hihihihihi")
-  putStoriesOnPage();
-// come back to here, i think i want the stories to be visible when logged out still. 
-  updateNavOnLogin();
-  // showFavoritesList();
+  start();
+  window.location.reload();
+
   ///hiiii dante, so we know the reload causes rthe loading screen to persist, when i removed window.reload() it kinda fixed it 
 
 }

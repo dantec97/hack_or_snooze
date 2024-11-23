@@ -15,6 +15,7 @@ async function getAndShowStoriesOnStart() {
   } else {
     // Handle the case where currentUser is not available
     console.log("No user logged in");
+    $storiesLoadingMsg.remove();
   }
 }
 

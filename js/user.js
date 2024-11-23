@@ -88,17 +88,28 @@ async function loadStories() {
  */
 
 function logout(evt) {
+  
   console.debug("logout", evt);
   localStorage.clear();
-  location.reload();
+  
   
   // Ensure that the loading message is hidden
   $("#stories-loading-msg").hide(); 
 
   $loginForm.show();
+  $storiesLoadingMsg.hide();
+  console.log("hihihihihi")
+  putStoriesOnPage();
+// come back to here, i think i want the stories to be visible when logged out still. 
+  updateNavOnLogin();
+  // showFavoritesList();
+  ///hiiii dante, so we know the reload causes rthe loading screen to persist, when i removed window.reload() it kinda fixed it 
+
 }
 
-$navLogOut.on("click", logout);
+
+// $navLogOut.on("click", logout);
+$(document).on("click", "#nav-logout", logout);
 
 /******************************************************************************
  * Storing/recalling previously-logged-in-user with localStorage

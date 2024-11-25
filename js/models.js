@@ -173,26 +173,25 @@ class User {
    * - name: the user's full name
    */
 
-  static async signup(username, password, name) {
-    const response = await axios({
-      url: `${BASE_URL}/signup`,
-      method: "POST",
-      data: { user: { username, password, name } },
-    });
+  static async signup(name, username, password) {
+    try {
+      const response = await axios.post('https://hack-or-snooze-v3.herokuapp.com/signup', {
+        user: { name, username, password }
+      });
 
-    let { user } = response.data
-
-    return new User(
-      {
-        username: user.username,
-        name: user.name,
-        createdAt: user.createdAt,
-        favorites: user.favorites,
-        ownStories: user.stories
-      },
-      response.data.token
-    );
+      // Return user instance based on API response
+      return new User(
+        response.data.user.username,
+        response.data.user.name,
+        response.data.user.createdAt,
+        response.data.token
+      );
+    } catch (error) {
+      console.error('Error during signup:', error.response?.status, error.response?.data);
+      throw error; // Re-throw the error to handle it where this method is called
+    }
   }
+
   
 
   /** Login in user with API, make User instance & return it.

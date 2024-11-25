@@ -15,6 +15,7 @@ window.onload = async function() {
 
 
 /** Handle login form submission. If login ok, sets up the user instance */
+// the below code alllows user ineraction but cant handle signup, rn i can use the other code to create the account and then this code to interact 
 
 async function login(evt) {
   console.debug("login", evt);
@@ -48,21 +49,100 @@ async function signup(evt) {
   const username = $("#signup-username").val();
   const password = $("#signup-password").val();
 
-  // User.signup retrieves user info from API and returns User instance
-  // which we'll make the globally-available, logged-in user.
-  currentUser = await User.signup(username, password, name);
+  try {
+    // Use the User.signup method to send the signup request
+    currentUser = await User.signup(name, username, password);
 
-  saveUserCredentialsInLocalStorage();
-  updateUIOnUserLogin();
+    // Automatically log in after sign-up by calling the login function with the new credentials
+    currentUser = await User.login(username, password);
 
-  $signupForm.trigger("reset");
+    // Save user credentials and update UI
+    saveUserCredentialsInLocalStorage();
+    updateUIOnUserLogin();
+    location.reload();  // Reload the page to reflect the logged-in state
+
+    $signupForm.trigger("reset"); // Reset the form
+    console.log("Signup and login successful for:", currentUser);
+  } catch (error) {
+    console.error("Signup failed:", error);
+  }
 }
 
-$signupForm.on("submit", function() {
-  
-  signup(); // Call your signup function
- 
-  putStoriesOnPage();
+$signupForm.on("submit", signup);
+
+
+//this code allows to create an account but freeze after, i have to use the above code to interact
+// async function login(evt) {
+//   console.debug("login", evt);
+//   evt.preventDefault();
+
+//   // grab the username and password
+//   const username = $("#login-username").val();
+//   const password = $("#login-password").val();
+
+//   // User.login retrieves user info from API and returns User instance
+//   // which we'll make the globally-available, logged-in user.
+//   currentUser = await User.login(username, password);
+
+//   $loginForm.trigger("reset");
+
+//   saveUserCredentialsInLocalStorage();
+//   updateUIOnUserLogin();
+// }
+
+// $loginForm.on("submit", login);
+
+// /** Handle signup form submission. */
+
+// async function signup(evt) {
+//   console.debug("signup", evt);
+//   evt.preventDefault();
+
+//   const name = $("#signup-name").val();
+//   const username = $("#signup-username").val();
+//   const password = $("#signup-password").val();
+
+//   // User.signup retrieves user info from API and returns User instance
+//   // which we'll make the globally-available, logged-in user.
+//   currentUser = await User.signup(username, password, name);
+
+//   saveUserCredentialsInLocalStorage();
+//   updateUIOnUserLogin();
+
+//   $signupForm.trigger("reset");
+// }
+
+// $signupForm.on("submit", signup);
+
+
+
+
+// In app.js or your main file
+
+// Attach the submit event using jQuery
+$signupForm.on("submit", async function (evt) {
+  console.debug("signup", evt);
+  evt.preventDefault();
+
+  const name = $("#signup-name").val();
+  const username = $("#signup-username").val();
+  const password = $("#signup-password").val();
+
+  try {
+    // Signup API call
+    currentUser = await User.signup(name, username, password);
+
+    saveUserCredentialsInLocalStorage();
+    updateUIOnUserLogin();
+    login();
+    
+
+
+    $signupForm.trigger("reset"); // Reset the form
+    console.log("Signup successful for:", currentUser);
+  } catch (error) {
+    console.error("Signup failed:", error);
+  }
 });
 
 

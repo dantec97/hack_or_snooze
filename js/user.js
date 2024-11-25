@@ -70,53 +70,6 @@ async function signup(evt) {
 
 $signupForm.on("submit", signup);
 
-
-//this code allows to create an account but freeze after, i have to use the above code to interact
-// async function login(evt) {
-//   console.debug("login", evt);
-//   evt.preventDefault();
-
-//   // grab the username and password
-//   const username = $("#login-username").val();
-//   const password = $("#login-password").val();
-
-//   // User.login retrieves user info from API and returns User instance
-//   // which we'll make the globally-available, logged-in user.
-//   currentUser = await User.login(username, password);
-
-//   $loginForm.trigger("reset");
-
-//   saveUserCredentialsInLocalStorage();
-//   updateUIOnUserLogin();
-// }
-
-// $loginForm.on("submit", login);
-
-// /** Handle signup form submission. */
-
-// async function signup(evt) {
-//   console.debug("signup", evt);
-//   evt.preventDefault();
-
-//   const name = $("#signup-name").val();
-//   const username = $("#signup-username").val();
-//   const password = $("#signup-password").val();
-
-//   // User.signup retrieves user info from API and returns User instance
-//   // which we'll make the globally-available, logged-in user.
-//   currentUser = await User.signup(username, password, name);
-
-//   saveUserCredentialsInLocalStorage();
-//   updateUIOnUserLogin();
-
-//   $signupForm.trigger("reset");
-// }
-
-// $signupForm.on("submit", signup);
-
-
-
-
 // In app.js or your main file
 
 // Attach the submit event using jQuery

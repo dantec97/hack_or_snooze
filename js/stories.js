@@ -130,19 +130,39 @@ document.querySelector('#new-story-form').addEventListener('submit', handleStory
 
 /** Gets list of stories from server, generates their HTML, and puts on page. */
 
-function putStoriesOnPage() {
+// function putStoriesOnPage() {
+//   console.debug("putStoriesOnPage");
+
+//   $allStoriesList.empty();
+
+//   // loop through all of our stories and generate HTML for them
+//   for (let story of storyList.stories) {
+//     const $story = generateStoryMarkup(story);
+//     $allStoriesList.append($story);
+//   }
+
+//   $allStoriesList.show();
+// }
+async function putStoriesOnPage() {
   console.debug("putStoriesOnPage");
+
+  // Ensure the story list is loaded
+  if (!storyList) {
+    console.debug("Fetching stories since storyList is not yet available");
+    storyList = await StoryList.getStories();
+  }
 
   $allStoriesList.empty();
 
-  // loop through all of our stories and generate HTML for them
+  // Loop through all of our stories and generate HTML for them
   for (let story of storyList.stories) {
     const $story = generateStoryMarkup(story);
     $allStoriesList.append($story);
   }
 
-  $allStoriesList.show();
+  $allStoriesList.show(); // Show the story list
 }
+
 
 function saveFavoritesToLocalStorage(favorites) {
   const uniqueFavorites = Array.from(new Set(favorites.map(fav => fav.storyId)))

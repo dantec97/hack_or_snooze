@@ -124,14 +124,17 @@ function logout(evt) {
   console.debug("logout", evt);
   localStorage.clear();
   
+
   // Hide loading message before reload
-  $("#stories-loading-msg").hide();
+  // $("#stories-loading-msg").hide();
   
   $loginForm.show();
   $storiesLoadingMsg.hide();
+  $allStoriesList.show();
   
   console.log("Logging out...");
-  start(); // Or whatever the function is that starts the process after logout
+  // start(); // Or whatever the function is that starts the process after logout
+  navAllStories();
   window.location.reload();
 }
 
@@ -216,22 +219,25 @@ function toggleFavoriteStory(evt) {
   }
 
   const storyId = $(evt.target).closest('li').attr('id');
-  const isFavorited = currentUser.favorites.includes(storyId);
+  
+  const isFavorited = currentUser.favorites.some(story => story.storyId === storyId);
 
   if (isFavorited) {
     currentUser.unfavoriteStory(storyId)
       .then(() => {
         $(evt.target).removeClass('favorited').addClass('not-favorited');
+        
       });
   } else {
     currentUser.favoriteStory(storyId)
       .then(() => {
         $(evt.target).removeClass('not-favorited').addClass('favorited');
+        console.log(`heres the ID u wanted:  ${storyId}`)
       });
   }
  
 }
-
+//hereeeeljhflakfhjlaskjflaksj 
 $(document).on('click', '.favorite-btn', toggleFavoriteStory);
 
 

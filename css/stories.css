@@ -15,6 +15,10 @@
   /* background-color: red; */
 }
 
+#all-stories-list{
+  /* max-width: 100px; */
+}
+
 #fav-stories-list{
   display: grid; /* Use CSS Grid */
   grid-template-columns: 1fr; /* Only 1 column per row */
@@ -49,10 +53,14 @@
 }
 
 
+
+
 #stories-loading-msg {
   font-weight: bold;
   font-size: 150%;
   margin: 20px 30px;
+  display: flex;
+  justify-content: center;
 }
 .stories-list {
   overflow-y: scroll; /* Enable vertical scrolling */

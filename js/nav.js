@@ -22,20 +22,25 @@ function navAllStories(evt) {
   hidePageComponents();
   putStoriesOnPage();
   $favStoriesList.hide();
+  console.log("NAV ALL")
 }
+$navAllBtn.on("click", () => {
+  window.location.reload();
+});
 
-$body.on("click", "#nav-all", navAllStories);
 
-/** Show login/signup on click on "login" */
 
 function navLoginClick(evt) {
   console.debug("navLoginClick", evt);
   hidePageComponents();
   $loginForm.show();
   $signupForm.show();
+  $('.stories-container').hide();
 }
 
 $navLogin.on("click", navLoginClick);
+
+
 
 /** When a user first logins in, update the navbar to reflect that. */
 
@@ -73,11 +78,12 @@ function showFavoritesList() {
     for (let story of uniqueFavorites) {
       const $story = generateStoryMarkup(story); // Reuse your existing function to generate markup
       $favStoriesList.prepend($story);
+      console.log("FOR HAPPEND")
     }
   } else {
     $favStoriesList.append('<h5>No favorites added yet!</h5>');
   }
-
+  // putStoriesOnPage(); not sure if this is the solution to the api users all being me 
   $allStoriesList.show(); // Display the list
 }
 

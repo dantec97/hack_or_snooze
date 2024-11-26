@@ -15,6 +15,8 @@ const $navUserProfile = $("#nav-user-profile");
 const $navLogOut = $("#nav-logout");
 const $favStoriesList = $("#fav-stories-list");
 const $loginBtn = $("#login-btn")
+const $navAllBtn = $("#nav-all")
+
 
 
 /** To make it easier for individual components to show just themselves, this
@@ -53,19 +55,11 @@ async function start() {
 
   // Hide the loading message
   $("#stories-loading-msg").hide();
+  navAllStories();
 }
 
 
-// async function start() {
-//   console.debug("start");
 
-//   // "Remember logged-in user" and log in, if credentials in localStorage
-//   await checkForRememberedUser();
-//   await getAndShowStoriesOnStart();
-
-//   // if we got a logged-in user
-//   if (currentUser) updateUIOnUserLogin();
-// }
 
 // Once the DOM is entirely loaded, begin the app
 

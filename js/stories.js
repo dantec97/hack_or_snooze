@@ -19,7 +19,7 @@ async function getAndShowStoriesOnStart() {
  
 }
 
-
+// bcca373a-fc1f-4bd4-a379-b3913573b5d8
 function handleFavoriteStory(evt) {
   const storyId = evt.target.dataset.storyId;
 
@@ -162,6 +162,9 @@ async function putStoriesOnPage() {
   }
 
   $allStoriesList.show(); // Show the story list
+  
+  
+
 }
 
 
@@ -195,6 +198,7 @@ document.addEventListener('click', async function (event) {
       // Otherwise, favorite it
       event.target.classList.add('favorited');
       console.log("elseeee HEYYY THIS WORKING");
+      
 
       const storyToAdd = storyList.stories.find(story => story.storyId === storyId);
       if (storyToAdd) {
@@ -219,6 +223,7 @@ document.addEventListener('click',function (event) {
   if (event.target.classList.contains('favorite-btn favorited')) {
     
     //update the favorites list (fixed favs not disapearing from list until reload)
+    // saveFavoritesToLocalStorage();
     showFavoritesList();
   }
 });
@@ -249,16 +254,19 @@ function findStoryById(storyId) {
 
 
 
-
 function updateFavoritesOnPageLoad() {
   // Get the list of favorited story IDs from localStorage
   const favoritedStoryIds = JSON.parse(localStorage.getItem('favorites')) || [];
+  console.log('Favorited Story IDs:', favoritedStoryIds); // Log the stored IDs for debugging
 
   // Loop through each story and check if it's favorited
   favoritedStoryIds.forEach(storyId => {
     const button = document.querySelector(`.favorite-btn[data-story-id="${storyId}"]`);
     if (button) {
+      console.log(`Found button for story: ${storyId}`); // Debugging
       button.classList.add('favorited'); // Apply the favorited class to the button
+    } else {
+      console.warn(`Button not found for story: ${storyId}`); // Debugging
     }
   });
 }

@@ -191,8 +191,6 @@ document.addEventListener('click', async function (event) {
         
       );
 
-      // Ensure UI reflects changes before rendering favorites
-      showFavoritesList();
     } else {
       // Otherwise, favorite it
       event.target.classList.add('favorited');

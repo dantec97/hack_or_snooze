@@ -21,6 +21,7 @@ function navAllStories(evt) {
   console.debug("navAllStories", evt);
   hidePageComponents();
   putStoriesOnPage();
+  $favStoriesList.hide();
 }
 
 $body.on("click", "#nav-all", navAllStories);
@@ -44,6 +45,8 @@ function updateNavOnLogin() {
   $navLogin.hide();
   $navLogOut.show();
   $navUserProfile.text(`${currentUser.username}`).show();
+  $favStoriesList.hide();
+
 }
  // Handle the click event for the "Favorites" button in the nav bar
  document.querySelector('#nav-favorites').addEventListener('click', () => {
@@ -69,7 +72,7 @@ function showFavoritesList() {
     // Now, loop through the unique stories and render them
     for (let story of uniqueFavorites) {
       const $story = generateStoryMarkup(story); // Reuse your existing function to generate markup
-      $favStoriesList.append($story);
+      $favStoriesList.prepend($story);
     }
   } else {
     $favStoriesList.append('<h5>No favorites added yet!</h5>');

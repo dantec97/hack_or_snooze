@@ -236,14 +236,3 @@ $(document).on('click', '.favorite-btn', toggleFavoriteStory);
 
 
 
-// Event listener for the "Hack or Snooze" link
-document.querySelector('#nav-all').addEventListener('click', function(event) {
-  event.preventDefault();  // Prevent default link behavior (which would cause a page reload)
-  
-  // Hide the favorites list (bug fix for favs displaying after visiting favorites section)
-  $favStoriesList.hide();
-  // Optionally, you can also show the main story list or reset the page to the home state
-  document.querySelector('#all-stories-list').style.display = 'block';  // Show the main stories list if needed
-  
-  // You can add additional logic here if you want to reset other parts of the UI
-});

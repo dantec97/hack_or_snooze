@@ -8,6 +8,11 @@
   gap: 20px; /* Adds space between the grid items */
   margin: 20px 5px;
   padding-left: 4rem;
+  background-color: #f6f6ef;
+  max-width: 80%;
+  max-height: 80%;
+  overflow: hidden;
+  /* background-color: red; */
 }
 
 #fav-stories-list{
@@ -16,7 +21,9 @@
   gap: 20px; /* Adds space between the grid items */
   margin: 20px 5px;
   padding-left: 4rem;
-  padding-bottom: 100rem;
+  padding-bottom: 100%;
+  
+  /* background-color: red; */
 }
 
 #fav-stories-list > li{
@@ -26,9 +33,7 @@
   border-bottom: 1px solid #ddd; /* Light border for separation */
   display: flexbox;
  
- width: 100vw;
- 
- 
+  width: 700px;
 }
 
 
@@ -39,10 +44,8 @@
   border-bottom: 1px solid #ddd; /* Light border for separation */
   display: flexbox;
  
- width: 100vw;
+  width: 700px;
 
-}
-.stories-container {
 }
 
 
@@ -51,7 +54,16 @@
   font-size: 150%;
   margin: 20px 30px;
 }
+.stories-list {
+  overflow-y: scroll; /* Enable vertical scrolling */
+  /* max-width: 90%; */
 
+}
+
+.stories-container{
+  max-height: 85%;
+  overflow-y: scroll; /* Enable vertical scrolling */
+}
 
 /* Individual stories */
 
@@ -100,7 +112,9 @@
   color: red;
   /* display: none; */
 }
-
+.fav-stories{
+  display: none;
+}
 .remove-btn {
   background-color: #ff0000; /* Orange background */
   color: white; /* White text */

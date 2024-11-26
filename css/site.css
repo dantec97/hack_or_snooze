@@ -4,24 +4,24 @@ body {
   font-family: Arimo, sans-serif;
   margin: 0;
   padding: 0;
-  width: 100vw;
-  height: 100vh;
+  width: 90vw;
+  height: 90vh;
   box-sizing: border-box;
-  background-color: #f6f6ef; /* Light background for the whole page */
+  /* scale: 90%; */
+  background-color: white; /* Light background for the whole page */
 }
+
 
 h1 {
   font-size: 1.5rem;
   margin: 0;
-  padding: 0.5rem 0;
-  text-align: center;
-  color: #333;
+ 
 }
 
 h4 {
   font-size: 1rem;
   margin: 0;
-  padding: 0.5rem 0;
+
 }
 
 a {
@@ -37,12 +37,10 @@ a:hover {
 .container {
   display: flex;
   flex-direction: column;
-  justify-content: center; /* Center the content vertically */
-  align-items: center; /* Center horizontally */
+  align-self: center;
   background-color: #f6f6ef;
-  min-height: 100%;
-  padding: 0;
 }
+
 
 /* Forms styling (this used to style all) */
 form {
@@ -61,13 +59,6 @@ form {
   position: fixed;
   width: 100%;
   z-index: 10;
-}
-#login-form {
-  display: none;
-}
-
-#signup-form {
-  display: none;
 }
 
 form > * {
@@ -129,30 +120,33 @@ form hr {
 }
 
 /* Responsive design for mobile screens */
-@media screen and (max-width: 576px) {
+@media screen and (max-width: 550px,) {
   body {
     margin: 0;
   }
-  form {
-    padding: 15px;
-    max-width: 100%;
-  }
-  form input {
-    padding: 12px;
-  }
-  form button {
-    padding: 15px;
+}
+
+
+@media screen and (min-width: 950px) {
+  body {
+    max-width: 900px;
+    margin: 8px auto;
   }
 }
 
-@media screen and (min-width: 992px) {
-  body {
-    width: 100%;
-    max-width: none;
-  }
-}
+
+
 
 /* Button styling for other buttons outside the form */
 button {
   cursor: pointer;
+}
+
+
+#login-form {
+  display: none;
+}
+
+#signup-form {
+  display: none;
 }

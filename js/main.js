@@ -36,17 +36,25 @@ function hidePageComponents() {
 async function start() {
   console.debug("start");
 
-  // Fetch stories and display them on the page
-  await putStoriesOnPage();
+  // Show the loading message
+  $storiesLoadingMsg.show();
 
   // Check for remembered user and log them in if valid credentials are stored
   await checkForRememberedUser();
+
+  // Fetch and display stories on the page
   await getAndShowStoriesOnStart();
 
+  // If a user is logged in, update the UI
   if (currentUser) {
     updateUIOnUserLogin();
+    $storiesLoadingMsg.show();
   }
+
+  // Hide the loading message
+  $("#stories-loading-msg").hide();
 }
+
 
 // async function start() {
 //   console.debug("start");

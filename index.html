@@ -34,52 +34,20 @@
 
 <!-- top navigation bar -->
 <nav>
-  <div class="navbar-brand">
+  <div class="navbar-left">
     <a class="nav-link" href="#" id="nav-all">Hack or Snooze</a>
+    <a class="nav-link" href="#" id="submit-link">submit</a>
+    |
+    <a class="nav-link" href="#" id="nav-favorites">favorites</a>
   </div>
-  <div class="nav-right">
+  <div class="navbar-right">
     <a class="nav-link" href="#" id="nav-login">login/signup</a>
     |
     <a class="nav-link" href="#" id="nav-user-profile"></a>
     |
-    <a class="nav-link" href="#" id="nav-favorites">favorites</a>
-    |
     <a class="hidden" id="nav-logout" href="#"><small>(logout)</small></a>
-    |
-   <a href="" id="submit-link">submit</a>
-  
+  </div>
 </nav>
-
-<!-- area for stories (all stories, user stories, favorites) -->
-<section class="stories-container container">
- <!-- New Story Form (Hidden by default) -->
-<form id="new-story-form" style="display: none;">
-  <label for="title">Title:</label>
-  <input type="text" id="title" name="title" required>
-
-  <label for="author">Author:</label>
-  <input type="text" id="author" name="author" required>
-
-  <label for="url">URL:</label>
-  <input type="url" id="url" name="url" required>
-
-  <button type="submit">Submit</button>
-</form>
-
-
-  <!-- loading message (removed by JS after stories loaded) -->
-  <div id="stories-loading-msg">Loading&hellip;</div>
-
-  <!-- List of all stories -->
-  <ol id="all-stories-list" class="stories-list"></ol>
-
-    <!-- List of stories favorited by the user -->
-    <ol id="fav-stories-list" class="fav-stories"></ol>
-
-</section>
-
-<!-- Login and signup forms -->
-<section class="account-forms-container container">
 
   <!-- Login form -->
   <form action="#" id="login-form" class="account-form hidden" method="post">
@@ -118,6 +86,37 @@
     <button type="submit">create account</button>
   </form>
 </section>
+<!-- area for stories (all stories, user stories, favorites) -->
+<section class="stories-container container">
+ <!-- New Story Form (Hidden by default) -->
+<form id="new-story-form" style="display: none;">
+  <label for="title">Title:</label>
+  <input type="text" id="title" name="title" required>
+
+  <label for="author">Author:</label>
+  <input type="text" id="author" name="author" required>
+
+  <label for="url">URL:</label>
+  <input type="url" id="url" name="url" required>
+
+  <button type="submit">Submit</button>
+</form>
+
+
+  <!-- loading message (removed by JS after stories loaded) -->
+  <div id="stories-loading-msg">Loading&hellip;</div>
+
+  <!-- List of all stories -->
+  <ol id="all-stories-list" class="stories-list"></ol>
+
+    <!-- List of stories favorited by the user -->
+    <ol id="fav-stories-list" class="fav-stories"></ol>
+
+</section>
+
+<!-- Login and signup forms -->
+<section class="account-forms-container container">
+
 
 <!-- Library JS & our JS -->
 <script src="https://unpkg.com/jquery"></script>

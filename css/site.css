@@ -44,19 +44,30 @@ a:hover {
   padding: 0;
 }
 
-/* Forms styling */
+/* Forms styling (this used to style all) */
 form {
   display: flex;
   flex-direction: column;
   align-items: center; /* Center align all form elements */
-  background-color: white;
   padding: 20px;
   margin: 20px auto;
   width: 100%;
   max-width: 400px;
-  border-radius: 8px;
   border: 1px solid #ddd;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.account-forms-container {
+  position: fixed;
+  width: 100%;
+  z-index: 10;
+}
+#login-form {
+  display: none;
+}
+
+#signup-form {
+  display: none;
 }
 
 form > * {

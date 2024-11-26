@@ -10,7 +10,10 @@
 }
 
 .account-forms-container {
+  position: relative;
+  z-index: 10; /* Higher z-index to ensure it stays above stories */
   padding-left: 20px;
-  background-color: red;
-
+   
 }
+
+

@@ -6,18 +6,19 @@ let storyList;
 /** Get and show stories when site first loads. */
 
 async function getAndShowStoriesOnStart() {
-  await checkForRememberedUser();  // Wait for the user to be logged in
-  if (currentUser) {
-    // Now that currentUser is available, we can load the stories
+  console.debug("getAndShowStoriesOnStart");
+
+  // Ensure story list is loaded
+  if (!storyList) {
     storyList = await StoryList.getStories();
-    $storiesLoadingMsg.remove();
-    putStoriesOnPage();
-  } else {
-    // Handle the case where currentUser is not available
-    console.log("No user logged in");
-    $storiesLoadingMsg.remove();
+    $signupForm.hide();
+    $loginForm.hide();
   }
+  // Display stories regardless of user status
+  putStoriesOnPage();
+ 
 }
+
 
 function handleFavoriteStory(evt) {
   const storyId = evt.target.dataset.storyId;

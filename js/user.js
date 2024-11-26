@@ -121,24 +121,19 @@ async function loadStories() {
  */
 
 function logout(evt) {
-  
   console.debug("logout", evt);
   localStorage.clear();
   
+  // Hide loading message before reload
+  $("#stories-loading-msg").hide();
   
-  // Ensure that the loading message is hidden
-  $("#stories-loading-msg").hide(); 
-
   $loginForm.show();
   $storiesLoadingMsg.hide();
-  console.log("hihihihihi")
-  start();
+  
+  console.log("Logging out...");
+  start(); // Or whatever the function is that starts the process after logout
   window.location.reload();
-
-  ///hiiii dante, so we know the reload causes rthe loading screen to persist, when i removed window.reload() it kinda fixed it 
-
 }
-
 
 // $navLogOut.on("click", logout);
 $(document).on("click", "#nav-logout", logout);
@@ -194,17 +189,22 @@ function saveUserCredentialsInLocalStorage() {
 function updateUIOnUserLogin() {
   console.debug("updateUIOnUserLogin");
 
-  // Show the story list once the user is logged in
-  $allStoriesList.show();
+  // Only show the story list if it's not already visible
+  if (!$allStoriesList.is(":visible")) {
+    $allStoriesList.show();
+  }
 
-  // Hide the login and signup forms
-  $loginForm.hide();
-  $signupForm.hide();
+  // Hide login and signup forms only if they are visible
+  if ($loginForm.is(":visible")) {
+    $loginForm.hide();
+  }
+  if ($signupForm.is(":visible")) {
+    $signupForm.hide();
+  }
 
   updateNavOnLogin();
-  
-  
 }
+
 
 
 //handle favorites
@@ -242,7 +242,6 @@ document.querySelector('#nav-all').addEventListener('click', function(event) {
   
   // Hide the favorites list (bug fix for favs displaying after visiting favorites section)
   $favStoriesList.hide();
-  
   // Optionally, you can also show the main story list or reset the page to the home state
   document.querySelector('#all-stories-list').style.display = 'block';  // Show the main stories list if needed
   

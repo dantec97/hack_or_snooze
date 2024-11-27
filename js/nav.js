@@ -5,11 +5,18 @@
  */
 
 function navShowStoryForm(evt){
-  evt.preventDefault();//prevent default behavior
-  //get the form element
-  const form = document.getElementById("new-story-form")
-  //tottle the visibility
-  form.style.display = form.style.display === "none" ? "block" : "none"
+
+  if (currentUser === undefined){
+   alert("Sorry you must be logged in to post a story <3")
+  }
+  else{
+    evt.preventDefault();//prevent default behavior
+    //get the form element
+    const form = document.getElementById("new-story-form")
+    //tottle the visibility
+    form.style.display = form.style.display === "none" ? "block" : "none"
+  }
+  
 }
 
 // Attach event listener to the "Submit New Story" link

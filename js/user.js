@@ -34,7 +34,6 @@ async function login(evt) {
   saveUserCredentialsInLocalStorage();
   updateUIOnUserLogin();
   location.reload();
-  // $navLogOut.hide();
 }
 
 $loginForm.on("submit", login);

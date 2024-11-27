@@ -23,6 +23,11 @@ function navAllStories(evt) {
   putStoriesOnPage();
   $favStoriesList.hide();
   console.log("NAV ALL")
+    if(currentUser===undefined){
+        $navLogOut.hide()
+
+    }
+
 }
 $navAllBtn.on("click", () => {
   window.location.reload();

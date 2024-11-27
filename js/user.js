@@ -34,6 +34,7 @@ async function login(evt) {
   saveUserCredentialsInLocalStorage();
   updateUIOnUserLogin();
   location.reload();
+  // $navLogOut.hide();
 }
 
 $loginForm.on("submit", login);
@@ -136,10 +137,12 @@ function logout(evt) {
   // start(); // Or whatever the function is that starts the process after logout
   navAllStories();
   window.location.reload();
+  
 }
 
 // $navLogOut.on("click", logout);
 $(document).on("click", "#nav-logout", logout);
+
 
 /******************************************************************************
  * Storing/recalling previously-logged-in-user with localStorage
@@ -160,6 +163,7 @@ async function checkForRememberedUser() {
 
   // Attempt login with stored credentials
   currentUser = await User.loginViaStoredCredentials(token, username);
+  console.log("CHECK USER JUST RAN ")
 }
 
 
